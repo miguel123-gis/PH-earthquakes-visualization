@@ -1,11 +1,5 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu May 28 16:28:46 2020
-
-@author: imper
-"""
 import os
-os.chdir(r'C:\Users\imper\Documents\new_GISfiles\earthquakesPH')
+os.chdir(r'path')
 import matplotlib.pyplot as plt
 from matplotlib.transforms import offset_copy
 import pandas as pd
