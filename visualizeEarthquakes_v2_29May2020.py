@@ -21,11 +21,12 @@ def plotPt():
     for i in range(gdf.shape[0]):
         g = gdf.iloc[i].geometry
         date = gdf.iloc[i]['Date'] 
-        ndate = datetime.strptime(date, '%Y-%m-%d')
-        ndate = (new_date.strftime('%Y %b %d'))
+        new_date = datetime.strptime(date, '%Y-%m-%d')
+        new_date = (new_date.strftime('%Y %b %d'))
         time = gdf.iloc[i]['Time_UTC'] 
         mag = gdf.iloc[i]['Magnitude']
-        info = (ndate + " " + time + " " + "\n" + str("Magnitude:") + str(mag))
+        info = (new_date +  " --- " + time + " " + "\n" + 
+                str("Magnitude:") + str(mag))
         fig = plt.figure(figsize=(15,10))
         ax  = fig.add_subplot(1, 1, 1, projection=proj)
         ax.set_extent(bounds)
@@ -33,9 +34,9 @@ def plotPt():
         ax.plot(g.x, g.y, marker='o', color='red', markersize=8) 
         plt.suptitle('Earthquakes in the Philippines from 2008 to 2020' + 
                      '\n' + info, ha='left', x=0.363, y=0.95) 
-        #plt.show()
-        plt.savefig('eq{0}.png'.format(i))
-    image_list='exports'
-    my_clip = ImageSequenceClip(image_list, fps=1)
-    my_clip.write_gif('yourGIF.gif')
+        plt.show()
+        #plt.savefig("exports\earthquake{0}.png".format(i))
+    #image_list='exports'
+    #my_clip = ImageSequenceClip(image_list, fps=1)
+    #my_clip.write_gif('eqph_gif.gif')
 plotPt()
