@@ -11,9 +11,10 @@ from datetime import datetime
 from tqdm import tqdm
 import natsort
 from natsort import humansorted
+from itertools import count
 
 def plotPt():
-    df = pd.read_csv('eqph_csv_29May2020_noF_20lines.csv') 
+    df = pd.read_csv('eqph_csv_29May2020_noF.csv') 
     df = df.sort_values(by=['Date', 'Time_UTC'])
     crs = "epsg:32651" 
     geometry = gpd.points_from_xy(df.Longitude, df.Latitude)
@@ -23,6 +24,7 @@ def plotPt():
     stamen_terrain = cimgt.Stamen('terrain-background')
     with tqdm(total=df.shape[0]) as pbar: 
         for i in range(gdf.shape[0]):
+            if os
             g = gdf.iloc[i].geometry
             date = gdf.iloc[i]['Date'] 
             new_date = datetime.strptime(date, '%Y-%m-%d')
@@ -30,21 +32,23 @@ def plotPt():
             time = gdf.iloc[i]['Time_UTC'] 
             mag = gdf.iloc[i]['Magnitude']
             info = (new_date +  " --- " + time + " " + "\n" + 
-                    str("Magnitude:") + str(mag))
+                    str("Magnitude:") + str(mag) + " --- " + str(i+1) + "/" + str(len(df)))
             fig = plt.figure(figsize=(15,10))   
             ax  = fig.add_subplot(1, 1, 1, projection=proj)
+            save_path = r'C:\Users\imper\Documents\new_GISfiles\earthquakesPH\exports\\'
             ax.set_extent(bounds)
             ax.add_image(stamen_terrain, 8)
             ax.plot(g.x, g.y, marker='o', color='red', markersize=8) 
             plt.suptitle('Earthquakes in the Philippines from 2011 to 2020' + 
                          '\n' + info, ha='left', x=0.363, y=0.95) 
-            plt.savefig("exports\earthquake{0}.png".format(i))
+            #plt.show()
+            plt.savefig(save_path+"earthquake{}.png".format(i))
             for i in range(1):
                 pbar.update(1)               
 def gif():
     os.chdir(r'C:\Users\imper\Documents\new_GISfiles\earthquakesPH\exports')
     imgs = humansorted(os.listdir('.'))
-    my_clip = ImageSequenceClip(imgs, fps=1)
+    my_clip = ImageSequenceClip(imgs, fps=1.5)
     my_clip.write_videofile('eqph.mp4', fps=15)
 
 plotPt()
@@ -55,3 +59,4 @@ gif()
 # add fault lines shp
 # bigger plot
 # bold plot title
+# check folder to skip existing file
