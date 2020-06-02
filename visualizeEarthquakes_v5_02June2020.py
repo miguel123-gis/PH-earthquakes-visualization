@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Jun  2 13:30:20 2020
-
-@author: imper
-"""
 import os
 os.chdir(r'C:\Users\imper\Documents\new_GISfiles\earthquakesPH')
 import matplotlib.pyplot as plt
@@ -69,4 +63,3 @@ NEXT STEPS as of 2 June 2020
 https://github.com/SciTools/cartopy/issues/1577
 2. check folder to skip existing file.
 """
-
