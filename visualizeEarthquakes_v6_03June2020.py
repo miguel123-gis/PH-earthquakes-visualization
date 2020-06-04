@@ -42,7 +42,7 @@ def plotPt():
             ax.set_extent(bounds)
             ax.add_image(stamen_terrain, 8)
             ax.plot(g.x, g.y, marker='o', color='red', markersize=8) 
-            a = ax.add_feature(fault_line, zorder=1)
+            ax.add_feature(fault_line, zorder=1)
             plt.suptitle('Earthquakes in the Philippines from 2011 to 2020' + 
                          '\n'+ 'with active fault lines' + '\n' + info, ha='left', 
                          x=0.363, y=0.97) 
