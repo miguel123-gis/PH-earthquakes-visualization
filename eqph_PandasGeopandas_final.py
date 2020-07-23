@@ -1,12 +1,7 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Jun  2 11:22:40 2020
-
-@author: imper
-"""
 import os
 os.chdir(r'C:\Users\imper\Documents\new_GISfiles\earthquakesPH')
 import matplotlib.pyplot as plt
+import matplotlib.lines as mlines
 import pandas as pd
 import geopandas as gpd
 from geopandas import GeoDataFrame
@@ -23,7 +18,7 @@ import natsort
 from natsort import humansorted
 
 def plotPt():
-    df = pd.read_csv('eqph_csv_29May2020_noF.csv') 
+    df = pd.read_csv('eqph_csv_29May2020_noF_20lines.csv') 
     df = df.sort_values(by=['Date', 'Time_UTC'])
     geometry = gpd.points_from_xy(df.Longitude, df.Latitude)
     gdf = GeoDataFrame(df, crs='epsg:32651', geometry=geometry) 
@@ -43,9 +38,9 @@ def plotPt():
             mag = gdf.iloc[i]['Magnitude']  
             info = (new_date +  ' --- ' + time + ' ' + '\n' + 
                     str('Magnitude:') + str(mag) + ' --- ' + str(i+1) + '/' + str(len(df)))
-           plt.suptitle('Earthquakes in the Philippines from 2011 to 2020' + 
-                 '\n'+ 'with active fault lines' + '\n' + info, ha='left', 
-                  x=0.363, y=0.97)             
+            plt.suptitle('Earthquakes in the Philippines from 2011 to 2020' + 
+                        '\n'+ 'with active fault lines' + '\n' + info, ha='left', 
+                        x=0.363, y=0.97)             
             fig = plt.figure(figsize=(15,10))   
             ax  = fig.add_subplot(1, 1, 1, projection=proj)
             ax.set_extent(bounds)
@@ -55,6 +50,8 @@ def plotPt():
             plt.suptitle('Earthquakes in the Philippines from 2011 to 2020' + 
                          '\n'+ 'with active fault lines' + '\n' + info, ha='left', 
                          x=0.363, y=0.97) 
+            fault_line_legend = mlines.Line2D([1], [1], color='black')
+            ax.legend([fault_line_legend], ['Fault lines'], loc='lower left', fancybox='True')
             #plt.show()
             plt.savefig(save_path+'earthquake{}.png'.format(i))
             for i in range(1):
