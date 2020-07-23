@@ -1,22 +1,13 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Jun  2 21:20:47 2020
-
-@author: imper
-"""
 import os
 import csv
 import matplotlib.pyplot as plt
+import matplotlib.lines as mlines
 import cartopy.crs as ccrs
 import cartopy.io.img_tiles as cimgt
 from cartopy.feature import ShapelyFeature
-from cartopy.io import shapereader
 from cartopy.io.shapereader import Reader
-from shapely.geometry import MultiLineString
 from datetime import datetime 
-from moviepy.editor import *
 from tqdm import tqdm
-import natsort
 from natsort import humansorted
 os.chdir(r'C:\Users\imper\Documents\new_GISfiles\earthquakesPH')
 
@@ -26,7 +17,7 @@ fault_line = ShapelyFeature(Reader('faultLines.shp').geometries(), ccrs.epsg(326
                             linewidth=1, edgecolor='black', facecolor='None')
 save_path = r'C:\Users\imper\Documents\new_GISfiles\earthquakesPH\exports2\\'  
 date,time,lon,lat,mag = [],[],[],[],[]
-with open ('eqph_csv_29May2020_noF_5lines.csv') as file:
+with open ('eqph_csv_29May2020_noF_20lines.csv') as file:
     reader = csv.reader(file, delimiter=',') 
     next(reader)
     date_sorted = sorted(reader, key=lambda col: datetime.strptime
@@ -54,6 +45,9 @@ with tqdm(index) as pbar:
                      ha='left', x=0.363, y=0.97)
         ax.plot(x, y, 'ro', markersize=5) 
         ax.add_feature(fault_line, zorder=1)
+        fault_line_legend = mlines.Line2D([1], [1], color='black')
+        ax.legend([fault_line_legend], ['Fault lines'], loc='lower left', fancybox='True')
+        #plt.show()
         plt.savefig(save_path+'earthquake{}'.format(i))
         for i in range(1):
             pbar.update(1)
@@ -61,5 +55,3 @@ os.chdir(r'C:\Users\imper\Documents\new_GISfiles\earthquakesPH\exports2')
 imgs = humansorted(os.listdir('.'))
 my_clip = ImageSequenceClip(imgs, fps=3.5)
 my_clip.write_videofile('eqph.mp4', fps=15)
-
-    
