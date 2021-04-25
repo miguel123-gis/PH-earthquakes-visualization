@@ -2,8 +2,6 @@ name: ENVNAME
 channels:
   - defaults
   - conda-forge
-  RUN apt-get update ##[edited]
-  RUN apt-get install ffmpeg libsm6 libxext6  -y
 prefix: C:\Users\imper\miniconda3\envs\ENVNAME
 
 
