@@ -3,3 +3,6 @@ channels:
   - defaults
   - conda-forge
 prefix: C:\Users\imper\miniconda3\envs\ENVNAME
+
+RUN apt-get update ##[edited]
+RUN apt-get install ffmpeg libsm6 libxext6  -y
