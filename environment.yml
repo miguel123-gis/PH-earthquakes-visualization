@@ -1,0 +1,5 @@
+name: ENVNAME
+channels:
+  - defaults
+  - conda-forge
+prefix: C:\Users\imper\miniconda3\envs\ENVNAME
